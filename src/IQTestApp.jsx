@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 const API_URL = "https://iq-backend-bc3f.onrender.com";
@@ -13,20 +14,20 @@ export default function IQTestApp() {
   const [log, setLog] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_URL}/questions`)
+    fetch(\`\${API_URL}/questions\`)
       .then((res) => res.json())
       .then(setQuestions);
   }, []);
 
   useEffect(() => {
-    if (submitted || current >= questions.length) return;
+    if (submitted || current >= questions.length || questions.length === 0) return;
     if (timeLeft <= 0) {
       handleAnswer(null);
       return;
     }
     const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearTimeout(timer);
-  }, [timeLeft, current, submitted]);
+  }, [timeLeft, current, submitted, questions]);
 
   const handleAnswer = (selected) => {
     const q = questions[current];
@@ -58,8 +59,8 @@ export default function IQTestApp() {
   };
 
   useEffect(() => {
-   if (questions.length > 0 && current === questions.length && !submitted) {
-      fetch(`${API_URL}/submit`, {
+    if (questions.length > 0 && current === questions.length && !submitted) {
+      fetch(\`\${API_URL}/submit\`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,11 +72,11 @@ export default function IQTestApp() {
         .then(setResult)
         .then(() => setSubmitted(true));
     }
-  }, [current, submitted, answers]);
+  }, [current, submitted, answers, questions]);
 
   if (questions.length === 0) return <p style={{ padding: 20 }}>Loading...</p>;
 
-  if (submitted) {
+  if (submitted && questions.length > 0) {
     return (
       <div style={{ padding: 20 }}>
         <h1>Your Real IQ Score</h1>
@@ -92,7 +93,7 @@ export default function IQTestApp() {
     );
   }
 
-  if (current >= questions.length) {
+  if (current >= questions.length || questions.length === 0) {
     return <p style={{ padding: 20 }}>Submitting your answers...</p>;
   }
 
