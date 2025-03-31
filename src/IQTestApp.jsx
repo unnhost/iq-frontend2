@@ -80,8 +80,23 @@ export default function IQTestApp() {
     return (
       <div style={{ padding: 20 }}>
         <h1>Your Real IQ Score</h1>
-        <p>✅ Estimated IQ: {result?.estimated_iq}</p>
+        <p style={{ fontSize: "1.5em" }}>🧠 Estimated IQ: <strong>{result?.estimated_iq}</strong></p>
         <p>Score: {result?.score} / {result?.max_score}</p>
+        <h2>🧩 Category Performance:</h2>
+        <ul>
+          {result?.category_scores && Object.entries(result.category_scores).map(([cat, score]) => (
+            <li key={cat}>
+              <strong>{cat}</strong>: {score} pts
+            </li>
+          ))}
+        </ul>
+        <h2>💬 Feedback:</h2>
+        <ul>
+          {result?.feedback && result.feedback.map((f, i) => (
+            <li key={i}>• {f}</li>
+          ))}
+        </ul>
+        <h3>📜 Answer Summary:</h3>
         <ul>
           {log.map((entry, i) => (
             <li key={i}>
