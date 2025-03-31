@@ -14,7 +14,7 @@ export default function IQTestApp() {
   const [log, setLog] = useState([]);
 
   useEffect(() => {
-   fetch(`${API_URL}/questions`)
+    fetch(`${API_URL}/questions`)
       .then((res) => res.json())
       .then(setQuestions);
   }, []);
