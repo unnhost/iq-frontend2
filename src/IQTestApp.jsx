@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 const API_URL = "https://iq-backend-bc3f.onrender.com";
@@ -14,7 +13,7 @@ export default function IQTestApp() {
   const [log, setLog] = useState([]);
 
   useEffect(() => {
-    fetch(\`\${API_URL}/questions\`)
+    fetch(`${API_URL}/questions`)
       .then((res) => res.json())
       .then(setQuestions);
   }, []);
@@ -60,8 +59,7 @@ export default function IQTestApp() {
 
   useEffect(() => {
     if (current === questions.length && !submitted) {
-      // Send to backend for real scoring
-      fetch(\`\${API_URL}/submit\`, {
+      fetch(`${API_URL}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
