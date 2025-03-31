@@ -58,7 +58,7 @@ export default function IQTestApp() {
   };
 
   useEffect(() => {
-    if (current === questions.length && !submitted) {
+   if (questions.length > 0 && current === questions.length && !submitted) {
       fetch(`${API_URL}/submit`, {
         method: "POST",
         headers: {
